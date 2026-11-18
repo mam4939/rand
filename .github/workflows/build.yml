@@ -1,0 +1,16 @@
+name: Build Windows Exe
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add MSBuild to path
+        uses: microsoft/setup-msbuild@v2
+      - name: Compile with MSVC
+        run: cl /EHsc main.cpp setupapi.lib iphlpapi.lib ws2_32.lib
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pandora-exe
+          path: main.exe
